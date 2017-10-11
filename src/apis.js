@@ -43,26 +43,25 @@ function NgMapShim() {
   this._lastKey = NaN;
   this._lastIndex = -1;
 }
-NgMapShim.prototype = {
-  _idx: function(key) {
+NgMapShim.prototype._idx = function(key) {
     if (key === this._lastKey) {
       return this._lastIndex;
     }
     this._lastKey = key;
     this._lastIndex = this._keys.indexOf(key);
     return this._lastIndex;
-  },
-  _transformKey: function(key) {
+};
+NgMapShim.prototype._transformKey = function(key) {
     return isNumberNaN(key) ? nanKey : key;
-  },
-  get: function(key) {
+};
+NgMapShim.prototype.get = function(key) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx !== -1) {
       return this._values[idx];
     }
-  },
-  set: function(key, value) {
+};
+NgMapShim.prototype.set = function(key, value) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx === -1) {
@@ -73,8 +72,8 @@ NgMapShim.prototype = {
 
     // Support: IE11
     // Do not `return this` to simulate the partial IE11 implementation
-  },
-  delete: function(key) {
+};
+NgMapShim.prototype.delete = function(key) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx === -1) {
@@ -85,7 +84,6 @@ NgMapShim.prototype = {
     this._lastKey = NaN;
     this._lastIndex = -1;
     return true;
-  }
 };
 
 // For now, always use `NgMapShim`, even if `window.Map` is available. Some native implementations

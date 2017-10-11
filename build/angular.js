@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.6.7-local+sha.d0ed8b107
+ * @license AngularJS v1.6.7-local+sha.cc8f2c361
  * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -56,7 +56,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.6.7-local+sha.d0ed8b107/' +
+    message += '\nhttp://errors.angularjs.org/1.6.7-local+sha.cc8f2c361/' +
       (module ? module + '/' : '') + code;
 
     for (i = 0, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -2747,7 +2747,7 @@ function toDebugString(obj, maxDepth) {
 var version = {
   // These placeholder strings will be replaced by grunt's `build` task.
   // They need to be double- or single-quoted.
-  full: '1.6.7-local+sha.d0ed8b107',
+  full: '1.6.7-local+sha.cc8f2c361',
   major: 1,
   minor: 6,
   dot: 7,
@@ -2897,7 +2897,7 @@ function publishExternalAPI(angular) {
       });
     }
   ])
-  .info({ angularVersion: '1.6.7-local+sha.d0ed8b107' });
+  .info({ angularVersion: '1.6.7-local+sha.cc8f2c361' });
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -4047,26 +4047,25 @@ function NgMapShim() {
   this._lastKey = NaN;
   this._lastIndex = -1;
 }
-NgMapShim.prototype = {
-  _idx: function(key) {
+NgMapShim.prototype._idx = function(key) {
     if (key === this._lastKey) {
       return this._lastIndex;
     }
     this._lastKey = key;
     this._lastIndex = this._keys.indexOf(key);
     return this._lastIndex;
-  },
-  _transformKey: function(key) {
+};
+NgMapShim.prototype._transformKey = function(key) {
     return isNumberNaN(key) ? nanKey : key;
-  },
-  get: function(key) {
+};
+NgMapShim.prototype.get = function(key) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx !== -1) {
       return this._values[idx];
     }
-  },
-  set: function(key, value) {
+};
+NgMapShim.prototype.set = function(key, value) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx === -1) {
@@ -4077,8 +4076,8 @@ NgMapShim.prototype = {
 
     // Support: IE11
     // Do not `return this` to simulate the partial IE11 implementation
-  },
-  delete: function(key) {
+};
+NgMapShim.prototype.delete = function(key) {
     key = this._transformKey(key);
     var idx = this._idx(key);
     if (idx === -1) {
@@ -4089,7 +4088,6 @@ NgMapShim.prototype = {
     this._lastKey = NaN;
     this._lastIndex = -1;
     return true;
-  }
 };
 
 // For now, always use `NgMapShim`, even if `window.Map` is available. Some native implementations
